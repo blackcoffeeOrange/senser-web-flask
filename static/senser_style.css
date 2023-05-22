@@ -1,0 +1,84 @@
+body{ 
+    width: 950px;
+    padding: 50px;
+    background-image:linear-gradient(to bottom, #A3B2A9, #0D7496, #1095C1);
+    font-family: 'メイリオ', Meiryo,sans-serif;
+    color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/*「現在の温度」*/
+.text_temp{
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    letter-spacing : 0.5em;
+    line-height    : 1.6em;
+}
+/*温度表示部分*/
+.temp_now{
+    font-size: 55px;
+    letter-spacing : 0.2em;
+}
+
+
+/*ボタン「温度を取得」*/
+div.button{
+    width: 90%;
+}
+input.button{
+    display       : inline-block;
+    float         : right;
+    border-radius : 40%;
+    font-size     : 18pt;
+    text-align    : center;
+    cursor        : pointer;
+    padding       : 19px 47px;
+    background    : #EF5179;
+    color         : #FFFFFF;
+    line-height   : 1em;
+    transition    : .3s;
+    box-shadow    : 6px 6px 3px #00161a;
+    border        : 0px solid #EF5179;
+    }
+input.button:hover{
+    box-shadow    : none;
+    color: #FFFFFF;
+    background-color: #ff85ad;
+    border        : 0px solid #ff85ad;
+}   
+
+
+/*「温度センサグラフ」と日付*/
+.text_graph{
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+/*「温度センサグラフ*/
+.temp_graph{ 
+    height: 100px;
+    font-size: 45px;
+    padding-left: 40px;
+}
+/*日付表示部分*/
+.data{
+    font-size: 20px;
+    padding-right: 40px;
+}
+
+
+/*グラフ表示部分*/
+.chart-container{
+    padding: 5px;
+    width: 90%;
+    height: 450px;
+    background-color: rgba( 168,187,183 , 0.5);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+

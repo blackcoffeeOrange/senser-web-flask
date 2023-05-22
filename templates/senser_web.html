@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/senser_style.css" />
+</head>
+
+<body>
+
+    <div class="text_temp">
+        <p>現在の温度</p><span class="temp_now">{{ temp_now }}</span>
+    </div>
+
+<!--ボタンクリックでSQLiteテーブルに保存した最新の温度と最新の日付を表示して、日時と温度の配列をグラフに渡して表示させる-->
+    <div class="button">
+        <form action="/update" method="GET">
+            <input class="button" type="submit" value="温度を取得">
+        </form>
+    </div>
+    <div class="text_graph">
+        <p class="temp_graph">温度センサ<br>グラフ</p>
+        <p class="data">{{ data_now }}</p>
+    </div>
+
+
+    <!-- chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <div class="chart-container">
+        <canvas id="tempChart"></canvas>
+    </div>
+
+    <script>
+
+        var temp_js = eval({{ temp_forjs | tojson }});//y軸の値(温度）を配列で取得
+        var timestamp_js = eval({{ timestamp_forjs | tojson }});//x軸の値（日時）を配列で取得
+        var ctx = document.getElementById('tempChart').getContext('2d');
+
+        var chart = new Chart
+            (ctx, {
+                type: 'line',//線グラフ
+                data: {
+                    labels: timestamp_js,//x軸の値（日時）の配列
+                    datasets: [{
+                        label: '温度', //データの名前
+                        pointRadius: 7, //点の大きさ
+                        borderColor: '#51f6ff', //線の色
+                        pointBackgroundColor: '#51f6ff', // 点の色
+                        pointBorderColor: '#51f6ff',//点の枠線の色
+                        data: temp_js //y軸の値（温度）の配列
+                    }]//dataset設定終わり
+                },//data設定終わり
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: '#FFFFFF' // フォントのデフォルト色
+                        }
+                    },
+                    scales: {
+                        xAxes: [{                           // Ｘ軸設定
+                            scaleLabel: {                 // 軸ラベル
+                                display: true,                // 表示設定
+                                labelString: '日時',    // ラベル
+                                fontColor: '#FFFFFF',             // 文字の色
+                                fontSize: 15                 // フォントサイズ
+                            },
+                            gridLines: {                  // 補助線
+                                color: "rgba( 150,198,203 , 0.3 )", // 補助線の色
+                            },
+                            ticks: {                      // 目盛り
+                                fontColor: "#FFFFFF",             // 目盛りの色
+                                fontSize: 14 // フォントサイズ
+                            }
+                        }],// X軸設定終わり
+                        yAxes: [{                         // Ｙ軸設定
+                            scaleLabel: {                  // 軸ラベル
+                                display: true,                 // 表示の有無
+                                labelString: '温度',     // ラベル
+                                fontFamily: "sans-serif",
+                                fontColor: "#FFFFFF",             // 文字の色
+                                fontFamily: "sans-serif",
+                                fontSize: 15                   // フォントサイズ
+                            },
+                            gridLines: {                   // 補助線
+                                color: "rgba( 150,198,203 , 0.3 )", // 補助線の色
+                                zeroLineColor: "rgba( 176,224,229 , 0.3 )"         // y=0（Ｘ軸の色）
+                            },
+                            ticks: {                       // 目盛り
+                                min: 0,                        // 最小値
+                                max: 60,                       // 最大値
+                                stepSize: 5,                   // 軸間隔
+                                fontColor: "rgba( 150,198,203 , 0.3 )",             // 目盛りの色
+                                fontSize: 14                   // フォントサイズ
+                            }
+                        }]//Y軸設定終わり
+                    }//scales終わり
+                }//options終わり
+            });//グラフ設定終わり
+    </script>
+</body>
+
+</html>
